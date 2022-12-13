@@ -1,0 +1,13 @@
+{
+  "process_count": "3",
+  "headless": false,
+  "path": "local",
+  "proxy": false,
+  "UserDataDir": "C://Temp",
+  "nowScreen": false,
+  "log": true,
+  "loginterval": 3,
+  "script_type": 2,
+  "APIHOST": "127.0.0.1:3000",
+  "downfilepath": "C://Temp//down"
+}

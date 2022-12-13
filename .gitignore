@@ -1,0 +1,6 @@
+node_modules
+data
+error/*
+config.json
+errorhtml/*
+scriptconfig.json
