@@ -46,5 +46,11 @@ declare namespace API {
     status: number;
     roles: number[];
     departmentName: string;
+
+    roleLabel: string;//TODO 自己加 的
+
+    lv: number;//TODO 自己加 的
+
+    uuid:string;
   };
 }

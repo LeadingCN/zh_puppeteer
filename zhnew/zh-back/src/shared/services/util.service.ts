@@ -4,9 +4,14 @@ import { FastifyRequest } from 'fastify';
 import { customAlphabet, nanoid } from 'nanoid';
 import * as CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
+import { ConfigService } from "@nestjs/config";
+import { ConfigurationKeyPaths } from "@/config/configuration";
+import md5 from 'md5'
 @Injectable()
 export class UtilService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService
+              ) {
+  }
 
   /**
    * 获取请求IP
@@ -83,6 +88,9 @@ export class UtilService {
     return nanoid();
   }
 
+
+
+
   /**
    * 生成一个随机的值
    */
@@ -97,4 +105,41 @@ export class UtilService {
     //获取当前时间戳
     return dayjs().valueOf() / 1000;
   }
+  public dayjsFormat(t): any {
+    return dayjs(t).format('YYYY-MM-DD HH:mm:ss');
+  }
+  /*
+  * 数组元素去重
+  * */
+  public unique(arr: any[],key: string): any[] {
+    const res = new Map();
+    return arr.filter((arr) => !res.has(arr[key]) && res.set(arr[key], 1));
+  }
+  /*
+  * API-pay接口MD5+盐 加密函数 返回sign
+  * */
+  ascesign(obj: any, yan: string) {
+    let newData2 = {}, signData2 = []
+    Object.keys(obj).sort().map(key => {
+      newData2[key] = obj[key]
+      if (key != 'sign'&& key != 'parentChannel') {
+        signData2.push(`${key}=${obj[key]}`);
+      }
+    })
+    let sign: string = this.md5(signData2.join('&') + `&key=${yan}`).toLocaleUpperCase();
+    return sign
+  }
+  /*
+  * 判断 sign 是否正确
+  * */
+  checkSign(obj: any, yan: string) {
+    let sign = obj.sign
+    delete obj.sign
+    let sign2 = this.ascesign(obj, yan)
+    console.log(`${obj.merId} 请求sign:${sign} 本地sign:${sign2}`);
+    return sign == sign2
+  }
+
+
+  //
 }

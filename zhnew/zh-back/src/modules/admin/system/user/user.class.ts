@@ -22,6 +22,15 @@ export class AccountInfo {
 
   @ApiProperty()
   loginIp: string;
+
+
+
+  @ApiProperty()
+  roleLabel: string;//TODO 自己加的
+  @ApiProperty()
+  lv: number;//TODO 自己加的
+  @ApiProperty()
+  uuid: string;//TODO 自己加的
 }
 
 export class PageSearchUserInfo {
@@ -64,9 +73,7 @@ export class PageSearchUserInfo {
   @ApiProperty()
   departmentName: string;
 
-  @ApiProperty({
-    type: [String],
-  })
+  @ApiProperty()
   roleNames: string[];
 }
 

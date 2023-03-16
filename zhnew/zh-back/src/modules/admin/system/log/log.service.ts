@@ -24,6 +24,7 @@ export class SysLogService {
    * 记录登录日志
    */
   async saveLoginLog(uid: number, ip: string, ua: string): Promise<void> {
+    if(typeof ip !== 'string') return ;
     const loginLocation = await this.utilService.getLocation(
       ip.split(',').at(-1).trim(),
     );

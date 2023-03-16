@@ -31,18 +31,18 @@
     </Space>
     <Space :size="20">
       <Search />
-      <Tooltip :title="$t('layout.header.tooltipLock')" placement="bottom">
-        <LockOutlined @click="lockscreenStore.setLock(true)" />
-      </Tooltip>
+<!--      <Tooltip :title="$t('layout.header.tooltipLock')" placement="bottom">-->
+<!--        <LockOutlined @click="lockscreenStore.setLock(true)" />-->
+<!--      </Tooltip>-->
       <FullScreen />
       <LocalePicker />
       <Dropdown placement="bottomRight">
         <Avatar :src="userInfo.headImg" :alt="userInfo.name">{{ userInfo.name }}</Avatar>
         <template #overlay>
           <Menu>
-            <Menu.Item @click="$router.push({ name: 'account-about' })">
-              {{ $t('routes.account.about') }}
-            </Menu.Item>
+<!--            <Menu.Item @click="$router.push({ name: 'account-about' })">-->
+<!--              {{ $t('routes.account.about') }}-->
+<!--            </Menu.Item>-->
             <Menu.Item @click="$router.push({ name: 'account-settings' })">
               {{ $t('routes.account.settings') }}
             </Menu.Item>

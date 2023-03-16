@@ -6,6 +6,7 @@ import { RedisModule } from './redis/redis.module';
 import { RedisService } from './services/redis.service';
 import { UtilService } from './services/util.service';
 import { ConfigurationKeyPaths } from '@/config/configuration';
+import { RabbitExampleModule } from "@/shared/rmq/rmq.module";
 
 // common provider list
 const providers = [UtilService, RedisService];
@@ -16,6 +17,7 @@ const providers = [UtilService, RedisService];
 @Global()
 @Module({
   imports: [
+    // RabbitExampleModule,
     HttpModule.register({
       timeout: 5000,
       maxRedirects: 5,
@@ -26,6 +28,7 @@ const providers = [UtilService, RedisService];
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService<ConfigurationKeyPaths>) => ({
+
         secret: configService.get<string>('jwt.secret'),
       }),
       inject: [ConfigService],

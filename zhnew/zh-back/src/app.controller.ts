@@ -7,8 +7,8 @@ import {
   UploadedFile,
   UseInterceptors,
   Request,
-  HttpException,
-} from '@nestjs/common';
+  HttpException, Query
+} from "@nestjs/common";
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { ConfigurationKeyPaths } from '@/config/configuration';
@@ -18,6 +18,10 @@ import { AuthService } from '@/modules/ws/auth.service';
 import { Authorize } from '@/modules/admin/core/decorators/authorize.decorator';
 import { UtilService } from '@/shared/services/util.service';
 import { ApiException } from '@/common/exceptions/api.exception';
+import { AdminUser } from "@/modules/admin/core/decorators/admin-user.decorator";
+import { IAdminUser } from "@/modules/admin/admin.interface";
+import { PermissionOptional } from "@/modules/admin/core/decorators/permission-optional.decorator";
+import { Ctx, EventPattern, MessagePattern, Payload, RmqContext } from "@nestjs/microservices";
 
 export class SelfFile {
   fieldname: string;
@@ -70,36 +74,49 @@ export class AppController {
     @Request() req: any,
     @UploadedFile() file: SelfFile,
   ) {
-    console.log(file);
-    console.log(file.mimetype);
-    let { action } = req.headers;
-    let userinfo: any = await this.authService.checkAdminAuthToken(
-      req.headers.token,
-    );
-    //判断是否过期
-    if (Math.floor(this.util.getNowTimestamp() - userinfo.iat) > 86400) {
-      throw new ApiException(11002);
-    }
-    //判断文件类型
-    if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
-      throw new ApiException(20004);
-    }
-    if (file.size > this.fileSizeMax) {
-      throw new ApiException(20005);
-    }
-    let fileName =
-      this.util.generateRandomValue(32) + '.' + file.mimetype.split('/')[1];
-    try {
-      fs.writeFileSync(
-        join(join(this.fileSavePath, action), fileName),
-        file.buffer,
-      );
-    } catch (e) {
-      console.error('文件保存失败', e);
-      throw new HttpException('文件保存失败', 500);
-    }
-    if (action == 'icon') {
-      return this.Host + 'resources/icon/' + fileName;
+    return
+    // console.log(file);
+    // console.log(file.mimetype);
+    // let { action } = req.headers;
+    // let userinfo: any = await this.authService.checkAdminAuthToken(
+    //   req.headers.token,
+    // );
+    // //判断是否过期
+    // if (Math.floor(this.util.getNowTimestamp() - userinfo.iat) > 86400) {
+    //   throw new ApiException(11002);
+    // }
+    // //判断文件类型
+    // if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+    //   throw new ApiException(20004);
+    // }
+    // if (file.size > this.fileSizeMax) {
+    //   throw new ApiException(20005);
+    // }
+    // let fileName =
+    //   this.util.generateRandomValue(32) + '.' + file.mimetype.split('/')[1];
+    // try {
+    //   fs.writeFileSync(
+    //     join(join(this.fileSavePath, action), fileName),
+    //     file.buffer,
+    //   );
+    // } catch (e) {
+    //   console.error('文件保存失败', e);
+    //   throw new HttpException('文件保存失败', 500);
+    // }
+    // if (action == 'icon') {
+    //   return this.Host + 'resources/icon/' + fileName;
+    // }
+  }
+
+
+  @PermissionOptional()
+  @Get('/winversion') //热更接口
+  private async winversion(@Query() query,@AdminUser() user: IAdminUser) {
+
+    return {
+      version: '1.0.4',
+      path:""
     }
   }
+
 }

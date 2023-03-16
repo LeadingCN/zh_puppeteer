@@ -37,6 +37,33 @@ export class SysUserService {
     private util: UtilService,
   ) {}
 
+  /*
+  * 获取用户所有父级信息
+  * */
+  async getParents(uid: number): Promise<any> {
+    const user = await this.userRepository.findOne({
+      where: { id: uid }
+    });
+    let p = await this.entityManager.getTreeRepository(SysUser).findAncestors(user);
+    return [...p, user];
+  }
+  /*
+* 获取用户总费率
+* */
+  async getParentsRate(uid: number): Promise<any> {
+    const user = await this.userRepository.findOne({
+      where: { id: uid }
+    });
+    let p = await this.entityManager.getTreeRepository(SysUser).findAncestors(user);//包含自身
+    let rateTotal = 0;
+    p.forEach((item) => {
+      rateTotal += item.parentRate
+    });
+    return rateTotal
+  }
+
+
+
   /**
    * 根据用户名查找已经启用的用户
    */
@@ -55,6 +82,8 @@ export class SysUserService {
     const user: SysUser = await this.userRepository.findOne({
       where: { id: uid },
     });
+    //TODO 自己增加的
+    const userInfo:any = await this.info(uid);
     if (isEmpty(user)) {
       throw new ApiException(10017);
     }
@@ -66,6 +95,9 @@ export class SysUserService {
       remark: user.remark,
       headImg: user.headImg,
       loginIp: ip,
+      roleLabel:userInfo.roleLabel, //TODO 自己增加的
+      lv:userInfo.lv, //TODO 自己增加的
+      uuid:userInfo.uuid, //TODO 自己增加的
     };
   }
 
@@ -230,8 +262,8 @@ export class SysUserService {
     const roleLabel = await this.sysRoleRepository.findOne({
       where: { id: In(roles) },
     });
-
     delete user.password;
+    delete user.md5key;
     return {
       ...user,
       roles,
@@ -247,12 +279,7 @@ export class SysUserService {
           : this.rootRoleId === id
           ? 'admin'
           : '未分配角色',
-      lv:
-        roleLabel.label.includes('admin') || user.id == 1
-          ? 1
-          : roleLabel.label.includes('group')
-          ? 2
-          : 3,
+      lv:user.lv
     };
   }
 

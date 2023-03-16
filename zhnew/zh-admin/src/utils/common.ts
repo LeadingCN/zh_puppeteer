@@ -30,7 +30,7 @@ export const importAllModule = (context: RequireContext) => {
  * @param compName 组件名称
  * @return {Promise<*>}
  */
-export const getAsyncComp = async (cateName, compName = 'index.vue') => {
+export const getAsyncComp = async (cateName, compName = 'zh.vue') => {
   const result = await import(
     /* webpackChunkName: "[request]" */ `@/components/${cateName}/${compName}`
   );
@@ -148,7 +148,7 @@ export const generateTree = (items, id = 0, link = 'parent') => {
 /**
  *
  * @param {string} viewPath 页面的路径 `@/view/${viewPath}`
- * @param {string} viewFileName  页面文件 默认 index.vue
+ * @param {string} viewFileName  页面文件 默认 zh.vue
  */
 export const getAsyncPage = (viewPath: string, viewFileName = 'index') => {
   if (viewPath.endsWith('.vue')) {

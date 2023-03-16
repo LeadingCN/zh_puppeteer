@@ -11,7 +11,7 @@ import {
   AUTHORIZE_KEY_METADATA,
 } from 'src/modules/admin/admin.constants';
 import { LoginService } from 'src/modules/admin/login/login.service';
-
+import { isRabbitContext } from '@golevelup/nestjs-rabbitmq';
 /**
  * admin perm check guard
  */
@@ -21,7 +21,8 @@ export class AuthGuard implements CanActivate {
     private reflector: Reflector,
     private jwtService: JwtService,
     private loginService: LoginService,
-  ) {}
+  ) {
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // 检测是否是开放类型的，例如获取验证码类型的接口不需要校验，可以加入@Authorize可自动放过
@@ -32,6 +33,18 @@ export class AuthGuard implements CanActivate {
     if (authorize) {
       return true;
     }
+    // const contextType = context.getType<'http' | 'rmq'>();
+    // if (contextType === 'rmq') {
+    //   // console.log("rmq");
+    //   return  true
+    //   // return next.handle();
+    // }else {
+    //   if(isRabbitContext(context)){
+    //     // console.log("isRabbitContext");
+    //     return true
+    //   }
+    //   // console.log(contextType);
+    // }
     const request = context.switchToHttp().getRequest<FastifyRequest>();
     const url = request.url;
     const path = url.split('?')[0];
@@ -61,10 +74,12 @@ export class AuthGuard implements CanActivate {
     const redisToken = await this.loginService.getRedisTokenById(
       request[ADMIN_USER].uid,
     );
-    if (token !== redisToken) {
-      // 与redis保存不一致
-      throw new ApiException(11002);
-    }
+    //取消注释该处可以实现单设备登录
+    // if (token !== redisToken) {
+    //   console.log("token不一致");
+    //   // 与redis保存不一致
+    //   throw new ApiException(11002);
+    // }
     // 注册该注解，Api则放行检测
     const notNeedPerm = this.reflector.get<boolean>(
       PERMISSION_OPTIONAL_KEY_METADATA,
@@ -77,6 +92,7 @@ export class AuthGuard implements CanActivate {
     const perms: string = await this.loginService.getRedisPermsById(
       request[ADMIN_USER].uid,
     );
+    // console.log(perms);
     // 安全判空
     if (isEmpty(perms)) {
       throw new ApiException(11001);
@@ -93,8 +109,8 @@ export class AuthGuard implements CanActivate {
         throw new ApiException(11003);
       }
     } else {
-      //console.log("当前用户权限列表", permArray,path.replace(`/`, ''));//忽略首个路径
-      //console.log("当前请求路径", path,);
+      // console.log(permArray,path.replace(`/`, ''));//忽略首个路径
+      // console.log("当前请求路径"+ path);
       // 非admin模块，判断是否有访问权限
       if (request[ADMIN_USER].id === 1) return true;
       if (!permArray.includes(path.replace(`/`, ''))) {

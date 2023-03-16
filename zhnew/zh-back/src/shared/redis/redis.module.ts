@@ -59,12 +59,15 @@ export class RedisModule implements OnModuleDestroy {
             if (clients.has(name)) {
               throw new Error('Redis Init Error: name must unique');
             }
-            clients.set(name, this.createClient(op));
+            let client = this.createClient(op);
+            clients.set(name, client);
           });
         } else {
           // not array
           clients.set(REDIS_DEFAULT_CLIENT_KEY, this.createClient(options));
         }
+        // let subClient = this.createClient(options[0]);
+        // subClient.subscribe
         return clients;
       },
       inject: [REDIS_MODULE_OPTIONS],

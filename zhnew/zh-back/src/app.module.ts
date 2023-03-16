@@ -24,6 +24,9 @@ import { HeroModule } from '@/hero/hero.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from '@/app.controller';
+import { ResourceModule } from "@/modules/resource/resource.module";
+import { UsersysModule } from "@/modules/usersys/usersys.module";
+import { ApiModule } from "@/modules/api/api.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -56,7 +59,9 @@ import { AppController } from '@/app.controller';
       }),
       inject: [ConfigService, LOGGER_MODULE_OPTIONS],
     }),
-    BullModule.forRoot({}),
+    BullModule.forRoot({
+
+    }),
     // custom logger
     LoggerModule.forRootAsync(
       {
@@ -93,6 +98,12 @@ import { AppController } from '@/app.controller';
     WSModule,
     NewtestModule,
     HeroModule,
+    ResourceModule,
+    UsersysModule,
+    ApiModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
   ],
   controllers: [AppController],
 })

@@ -20,12 +20,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/account/settings.vue'),
         meta: { title: t('routes.account.settings'), hideInMenu: true },
       },
-      {
-        path: 'about',
-        name: `${moduleName}-about`,
-        component: () => import('@/views/account/about.vue'),
-        meta: { title: t('routes.account.about'), hideInMenu: true },
-      },
+      // {
+      //   path: 'about',
+      //   name: `${moduleName}-about`,
+      //   component: () => import('@/views/account/about.vue'),
+      //   meta: { title: t('routes.account.about'), hideInMenu: true },
+      // },
     ],
   },
 ];

@@ -40,8 +40,8 @@ import { SysParamConfigService } from './param-config/param-config.service';
 import { SysServeController } from './serve/serve.controller';
 import { SysServeService } from './serve/serve.service';
 import { ConfigurationKeyPaths } from '@/config/configuration';
-import { ClientsModule, Transport } from "@nestjs/microservices";
-
+import {ZH} from "@/entities/resource/zh.entity";
+import {Link} from "@/entities/resource/link.entity";
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -57,6 +57,8 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
       SysTask,
       SysTaskLog,
       SysConfig,
+      ZH,
+      Link
     ]),
 
     BullModule.registerQueueAsync({
@@ -106,6 +108,7 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
     SysMenuService,
     SysLogService,
     SysOnlineService,
+    SysParamConfigService
   ],
 })
 export class SystemModule {}

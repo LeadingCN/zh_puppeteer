@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf8" />
+    <meta id="viewport" name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <title>收银台</title>
+</head>
+
+<body>
+    <div>
+
+
+
+
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+            <meta http-equiv="content-type" content="text/html;charset=utf8" />
+            <meta id="viewport" name="viewport"
+                content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+            <title>微信收银台</title>
+            <link rel="stylesheet" href="/UI/layuimini-2/lib/layui-v2.5.5/css/layui.css" media="all">
+            <link href="/UI/layer/theme/default/layer.css" rel="stylesheet">
+
+            <style type="text/css">
+                /* 重置 [[*/
+                body,
+                p,
+                ul,
+                li,
+                h1,
+                h2,
+                form,
+                input {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                h1,
+                h2 {
+                    font-size: 100%;
+                }
+
+                ul {
+                    list-style: none;
+                }
+
+                body {
+                    -webkit-user-select: none;
+                    -webkit-text-size-adjust: none;
+                    font-family: Helvetica;
+                    background: #ECECEC;
+                }
+
+                html,
+                body {
+                    height: 100%;
+                }
+
+                a,
+                button,
+                input,
+                img {
+                    -webkit-touch-callout: none;
+                    outline: none;
+                }
+
+                a {
+                    text-decoration: none;
+                }
+
+                /* 重置 ]]*/
+                /* 功能 [[*/
+                .hide {
+                    display: none !important;
+                }
+
+                .cf:after {
+                    content: ".";
+                    display: block;
+                    height: 0;
+                    clear: both;
+                    visibility: hidden;
+                }
+
+                /* 功能 ]]*/
+                /* 按钮 [[*/
+                a[class*="btn"] {
+                    display: block;
+                    height: 42px;
+                    line-height: 42px;
+                    color: #FFFFFF;
+                    text-align: center;
+                    border-radius: 5px;
+                }
+
+                .btn-blue {
+                    background: #3D87C3;
+                    border: 1px solid #1C5E93;
+                }
+
+                .btn-green {
+                    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #43C750), color-stop(1, #31AB40));
+                    border: 1px solid #2E993C;
+                    box-shadow: 0 1px 0 0 #69D273 inset;
+                }
+
+                /* 按钮 [[*/
+                /* 充值页 [[*/
+                .charge {
+                    font-family: Helvetica;
+                    padding-bottom: 10px;
+                    -webkit-user-select: none;
+                }
+
+                .charge h1 {
+                    margin: 50px 0px 20px 0px;
+                    height: 44px;
+                    line-height: 44px;
+                    color: #43C750;
+                    /*background: #3D87C3;*/
+                    text-align: center;
+                    font-size: 30px;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                }
+
+                .charge h2 {
+                    font-size: 14px;
+                    color: #777777;
+                    margin: 5px 0;
+                    text-align: center;
+                }
+
+                .charge .content {
+                    padding: 10px 12px;
+                }
+
+                .charge .select li {
+                    position: relative;
+                    display: block;
+                    float: left;
+                    width: 100%;
+                    margin-right: 2%;
+                    height: 150px;
+                    line-height: 150px;
+                    text-align: center;
+                    border: 1px solid #BBBBBB;
+                    color: #666666;
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                    border-radius: 3px;
+                    background-color: #FFFFFF;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                }
+
+                .charge .price {
+                    border-bottom: 1px dashed #C9C9C9;
+                    padding: 10px 10px 15px;
+                    margin-bottom: 20px;
+                    color: #666666;
+                    font-size: 12px;
+                }
+
+                .charge .border {
+                    border-bottom: 1px dashed #C9C9C9;
+                }
+
+                .charge .price strong {
+                    font-weight: normal;
+                    color: #EE6209;
+                    font-size: 30px;
+                    font-family: Helvetica;
+                }
+
+                .charge .showaddr {
+                    border: 1px dashed #C9C9C9;
+                    padding: 10px 10px 15px;
+                    margin-bottom: 20px;
+                    color: #666666;
+                    font-size: 12px;
+                    text-align: center;
+                }
+
+                .charge .showaddr strong {
+                    font-weight: normal;
+                    color: #9900FF;
+                    font-size: 30px;
+                    font-family: Helvetica;
+                }
+
+                .charge .copy-right {
+                    margin: 5px 0;
+                    font-size: 12px;
+                    color: #848484;
+                    text-align: center;
+                }
+
+                /* 充值页 ]]*/
+                .order {
+                    width: 100%;
+                    text-align: justify;
+                    float: left;
+                    /*浮动元素 自动转化为block 这里的也可以是 display:inlinep-block*/
+                    margin-bottom: 15px;
+                    font-size: 20px;
+                }
+
+                .weui-mask {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    display: block;
+                    left: 0;
+                    top: 0;
+                    background: rgba(0, 0, 0, 0.6);
+                    z-index: 100;
+                }
+
+                .weui-mask--visible {
+                    display: none;
+                }
+
+                .weui-dialog {
+                    width: 80%;
+                    position: absolute;
+                    text-align: center;
+                    align-content: center;
+                    display: block;
+                    background: #ECECEC;
+                    border-radius: 10px;
+                    left: 10%;
+                    top: 30%;
+                    z-index: 101;
+                }
+
+                .weui-dialog--visible {
+                    display: none;
+                }
+
+                .weui-dialog__hd {
+                    margin: 5px 0px 10px;
+                    line-height: 40px;
+                    border-bottom: 1px solid #C9C9C9;
+                }
+
+                .weui-dialog__bd {
+                    margin: 0px 0px 12px;
+                    line-height: 42px;
+                    border-bottom: 1px solid #C9C9C9;
+                }
+
+                .weui-dialog__re {
+                    margin: 5px 0px 16px;
+                    line-height: 40px;
+                    color: #5E5E5E;
+                }
+
+                .mask {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    position: absolute;
+                    text-align: center;
+                    justify-content: center;
+                    left: 0;
+                    top: 0;
+                    background: #ECECEC;
+                    z-index: 102;
+                }
+
+                .mask-visible {
+                    display: none;
+                }
+
+                .mod-ct {
+                    /*min-width: 300px;*/
+                    /*max-width: 640px;*/
+                    flex: 1;
+                    width: 100%;
+                    margin: 0 auto;
+                    margin-top: 1px;
+                    /*background: #fff url("./wave.png") top center repeat-x;*/
+                    text-align: center;
+                    color: #333;
+                    border: 1px solid #e5e5e5;
+                    border-top: none;
+                }
+
+                .mod-ct .tip {
+                    margin-top: 20px;
+                    border-top: 1px dashed #e5e5e5;
+                    padding: 10px 0;
+                    position: relative
+                }
+
+                .mod-ct .orderDes {
+                    font-size: 25px;
+                    padding-top: 10px
+                }
+
+                .mod-title {
+                    height: 60px;
+                    line-height: 60px;
+                    text-align: center;
+                    border-bottom: 1px solid #ddd;
+                    /*     background: #fff*/
+                }
+
+                .mod-title .text {
+                    font-size: 20px;
+                    color: #333;
+                    font-weight: normal;
+                    vertical-align: middle
+                }
+
+                .mod-ct .tip-text {
+                    display: inline-block;
+                    vertical-align: middle;
+                    text-align: left;
+                    margin-left: 23px;
+                    font-size: 16px;
+                    line-height: 28px;
+                    *display: inline;
+                    *zoom: 1;
+                    margin-top: 10px;
+                    margin-bottom: 10px
+                }
+
+                .ico_log {
+                    display: inline-block;
+                    width: 130px;
+                    height: 40px;
+                    vertical-align: middle;
+                    margin-right: 7px;
+                }
+
+                .open_btn {
+                    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #43C750), color-stop(1, #31AB40));
+                    border: 1px solid #2E993C;
+                    box-shadow: 0 1px 0 0 #69D273 inset;
+
+                    display: block;
+                    height: 42px;
+                    line-height: 42px;
+                    color: #FFFFFF;
+                    text-align: center;
+                    border-radius: 5px;
+                }
+            </style>
+
+        </head>
+
+        <body id="content">
+            <article class="charge">
+                <h1>收银台</h1>
+                <section class="content">
+                    <h2>
+                        <div class="price" id="price">￥<strong>100.00</strong></div>
+                    </h2>
+                    <div class="order"><span style="float:left">支付方式</span><span style="float:right"
+                            id="channel">微信</span></div>
+                    <div class="order"><span style="float:left">订单号</span><span id="orderid"
+                            style="float:right">1667810024723980474</span></div>
+                    <div class="order"><span style="float:left">订单有效期</span><span class="t" style="float:right">00 分：00
+                            秒</span></div>
+                    <div class="price">-</div>
+
+                    <div class="operation"><a class="btn-green" id="payBtn" href="#" onclick="payold()"></a></div>
+                    <p class="copy-right" style="display:none">点击上面的按钮即可进行支付</p>
+                </section>
+
+
+                <section class="content">
+
+                    <div id="h5Tips">
+                        <div style="width: 100%;text-align: center;">
+                            <div style="font-size: 18px;color: red;">如出现下方提示,请选择使用银行卡付款</div>
+                            <!-- <div style="font-size: 18px;color: red;">余额付款不到账，单图一致补</div> -->
+                        </div>
+                        <img src="./tips.png" alt="" style="width: 100%">
+
+                    </div>
+                    <div id="h5Tips" style="display:none">
+                        <div class="order"><span style="float:left;font-size:18px;color:red">1.请在订单有效期内支付，超时付款不到账</span>
+                        </div>
+                        <div class="order"><span
+                                style="float:left;font-size:18px;color:red">2.如付款失败，请重新拉起订单，复制号码充值不到账</span></div>
+                        <div class="order"><span style="float:left;font-size:14px">3.若无法拉起微信支付，请更换其他浏览器重试</span></div>
+                    </div>
+
+
+                </section>
+
+            </article>
+
+
+            <div class="weui-mask weui-mask--visible"></div>
+            <div class="weui-dialog weui-dialog--visible doing_dialog_box">
+                <div class="weui-dialog__hd">
+                    <strong class="weui-dialog__title">请确认支付是否已完成</strong>
+                </div>
+                <div class="weui-dialog__bd" onclick=""><a style="color:red" href="javascript:">已完成支付</a></div>
+                <div class="weui-dialog__ft" onclick="rePay()">
+                    <a class="weui-dialog__re" href="javascript:">支付遇到问题，重新支付</a>
+                </div>
+            </div>
+
+            <iframe id="iframe" style="display:none"></iframe>
+            <div id="form" style="display:none"></div>
+
+            <script src="/Scripts/jquery-3.3.1.min.js"></script>
+
+            <script src="/Scripts/qrcode.js"></script>
+            <script src="/UI/layer/layer.js"></script>
+
+            <script type="text/javascript">
+                const arr = {
+                    'q': 1,
+                    'v': 2
+                }
+                //进入来必须获取订单参数 无订单参数视为无效跳转到
+                var orderid = getQueryVariable('no');
+                document.getElementById('orderid').innerHTML = orderid;
+                document.getElementById('channel').innerHTML = orderid[0] == 'q' ? "QQ支付" : orderid[0] == 'v' ? "微信支付" : "出错";
+                if (!orderid || !arr[orderid[0]]) {
+                    document.getElementById('content').innerHTML = '<div>无订单号</div>';
+                }
+                //截取订单金额
+                let price = orderid.substring(orderid.length - 3, orderid.length);
+                document.getElementById('price').innerHTML = `￥<strong>${Number(price) ? Number(price) : 0}.00</strong>`;
+                function getQueryVariable(variable) {
+                    var query = window.location.search.substring(1);
+                    var vars = query.split("&");
+                    for (var i = 0; i < vars.length; i++) {
+                        var pair = vars[i].split("=");
+                        if (pair[0] == variable) {
+                            return pair[1];
+                        }
+                    }
+                    return null;
+                }
+                var o = document.getElementById('payBtn');
+
+                let t = '150'
+
+                let url = '';
+
+                var timer, minutes, seconds, ci;
+                timer = parseInt(t) - 1;
+                ci = setInterval(function () {
+                    minutes = parseInt(timer / 60, 10)
+                    seconds = parseInt(timer % 60, 10);
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    $(".t").html(minutes + ' 分：' + seconds + ' 秒');
+                    var s = document.getElementById('s');
+                    if (s != null) {
+                        s.innerHTML = timer + '';
+                    }
+
+
+
+                    if (!url && url.length < 1) {
+                        $("#payBtn").html("<i class=\"layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop\"></i>获取订单中...请耐心等候");
+                        GetPayUrl();
+                    }
+
+                    if (--timer < 0) {
+                        //$(".qrcode .expired").removeClass("hidden");
+                        $(".t").html('00 分：00 秒');
+                        $(".t").html('订单已过期,请重新提交');
+                        $("#payBtn").html('订单已过期,请重新提交');
+                        url = '';
+                        window.clearInterval(ci);
+                        url = '';
+                    }
+                }, 1000);
+
+                function pay() {
+                    if (url.length > 1) {
+                        // if (url.startsWith("https://www.gz.10086.cn")) {
+                        //     top.layer.alert("<span >1、下一步请用<span style='font-size:16px;color:red'>微信支付</span>，其他方式付款一律不到账，不退不补</span><br/>2、请在 <span style='font-size:16px;color: red'>" + timer + "</span> 秒内完成付款，<span style='font-size:16px;color: red'>请无视下一个页面的倒数时间</span>", { title: false, closeBtn: false, shift: 2 }, function () {
+                        //         load();
+                        //         layer.closeAll();
+                        //     });
+                        // } else if (url.indexOf("https://waphn.189.cn") != -1) {
+                        //     top.layer.alert("<span >1、如果付款失败，不要点“继续充值”，否则不到账。</span><br/>2、不要复制号码充值，否则不到账。", { title: false, closeBtn: false, shift: 2 }, function () {
+                        //         toPayOrder();
+                        //         layer.closeAll();
+                        //     });
+                        // } else {
+                        load();
+                        // }
+                    }
+                }
+
+                function load() {
+                    console.log(url)
+                    // if (url.startsWith('mqqapi://') || url.startsWith('weixin://') || url.startsWith('http') || url.startsWith('alipay')) {
+                    if (url.startsWith('mqqapi://') || url.startsWith('weixin://')) {
+                        window.location.href = url;
+                    }
+                    else if (url.indexOf('</form>') != -1) {
+                        $('#form').append(url);
+                        if (url.indexOf('<script>') == -1) {
+                            $('#form').append('<script>document.forms[0].submit()<\/script>')
+                        }
+                    }
+                }
+
+                function GetPayUrl() {
+                    $.post('/api/getpayurl', { orderid: orderid, channel: arr[orderid[0]] }, function (result) {
+
+                        if (result.code == 0) {
+                            $("#payBtn").html("立即支付( <span id='s' style='font-size:16px;color: red'></span> 秒内完成付款)")
+                            url = result.url;
+                            if (result.redirect)
+                                window.location.href = url;
+
+                        } else if (result.code == 3) {
+                            window.clearInterval(ci);
+                            $("#payBtn").html(result.msg);
+                            $(".t").html(result.msg);
+                        }
+
+                    })
+
+                }
+
+                // function toPayOrder() {
+                //     $.post('/Payment/PaymentOrder', { trade_no: 'P2022110716334590799492' }, function (result) {
+                //         if (result.code == 0) {
+                //             load();
+                //         }
+                //     })
+                // }
+
+                //判断是否是微信浏览器的函数
+                function isWeiXin() {
+                    //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+                    var ua = window.navigator.userAgent.toLowerCase();
+                    //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+                    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            </script>
+        </body>
+
+        </html>
+
+    </div>
+</body>
+
+</html>

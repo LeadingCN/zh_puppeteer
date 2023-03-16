@@ -42,6 +42,9 @@ export const useUserStore = defineStore({
     getPerms(): string[] {
       return this.perms;
     },
+    getAdmin(): boolean {
+      return this.userInfo.roleLabel === 'admin';
+    }
   },
   actions: {
     /** 清空token及用户信息 */

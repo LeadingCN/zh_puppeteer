@@ -74,6 +74,6 @@ export class AccountController {
   @PermissionOptional()
   @Get('permmenu')
   async permmenu(@AdminUser() user: IAdminUser): Promise<PermMenuInfo> {
-    return await this.loginService.getPermMenu(user.uid);
+    return await this.loginService.getPermMenu(user.uid,user.lv);
   }
 }

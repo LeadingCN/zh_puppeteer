@@ -4,7 +4,7 @@ import { store } from '@/store';
 import { Storage } from '@/utils/Storage';
 
 // 长时间不操作默认锁屏时间
-const initTime = 60 * 60;
+const initTime = 6000 * 6000;
 
 const isLock = Storage.get(IS_LOCKSCREEN, false);
 

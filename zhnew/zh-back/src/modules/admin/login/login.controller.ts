@@ -15,11 +15,15 @@ import { LogDisabled } from '../core/decorators/log-disabled.decorator';
 import { ImageCaptchaDto, LoginInfoDto } from './login.dto';
 import { ImageCaptcha, LoginToken } from './login.class';
 import { LoginService } from './login.service';
+import { JwtService } from "@nestjs/jwt";
+import process from "process";
 
 @ApiTags('登录模块')
 @Controller()
 export class LoginController {
-  constructor(private loginService: LoginService, private utils: UtilService) {}
+  constructor(private loginService: LoginService, private utils: UtilService,
+              private jwtService: JwtService,
+              ) {}
 
   @ApiOperation({
     summary: '获取登录图片验证码',
@@ -43,6 +47,7 @@ export class LoginController {
     @Req() req: FastifyRequest,
     @Headers('user-agent') ua: string,
   ): Promise<LoginToken> {
+    console.log(dto);
     await this.loginService.checkImgCaptcha(dto.captchaId, dto.verifyCode);
     const token = await this.loginService.getLoginSign(
       dto.username,
@@ -50,6 +55,7 @@ export class LoginController {
       this.utils.getReqIP(req),
       ua,
     );
+
     return { token };
   }
 }
