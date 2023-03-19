@@ -24,7 +24,7 @@
           <a-button type="primary" @click="editZh('close',rowSelection.selectedRowKeys)"> 批量关闭接单</a-button>
           <a-button type="primary" @click="editZh('upRechargeLimit',rowSelection.selectedRowKeys)"> 批量设置限额
           </a-button>
-          <a-button type="warning" @click="editZh('all',[])"> 清空所有账号</a-button>
+          <a-button type="primary" @click="editZh('all',[])"> 清空所有账号</a-button>
           <a-button type="primary" danger
                     @click="editZh('del',rowSelection.selectedRowKeys)"> 删除选中
           </a-button>
@@ -114,6 +114,14 @@ const columns: TableColumnItem[] = [
         label: "修改额度",
         onClick: async () => {
           await upRechargeLimit(record);
+        }
+      }
+      ,
+      {
+        label: "当天限额归0",
+        onClick: async () => {
+          await edit({action:"resetRechargeLimit",zuid:record.zuid});
+          dynamicTableInstance?.reload();
         }
       }
     ]

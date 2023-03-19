@@ -185,8 +185,8 @@ module.exports = defineConfig({
             comments: false,
           },
           compress: {
-            drop_debugger: false, // 注释console
-            drop_console: false,//剔去console
+            // drop_debugger: false, // 注释console
+            // drop_console: false,//剔去console
             //pure_funcs: ['console.log'], // 移除console
           },
         },

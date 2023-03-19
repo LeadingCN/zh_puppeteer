@@ -126,6 +126,7 @@ export class CommissionService {
         .addSelect(["zh.id"])
         .where("user.uuid = :uuid", { uuid: user.uuid })
         .getOne();
+
       return qb;
     }
 

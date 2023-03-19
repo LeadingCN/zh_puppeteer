@@ -80,7 +80,7 @@ import { useUserStore } from "@/store/modules/user";
 import { store } from "@/store";
 const userStore = useUserStore(store);
 defineOptions({
-  name: "DashboardWelcome"
+  name: "web"
 });
 //在页面加载完成后执行
 onMounted(() => {
@@ -99,7 +99,6 @@ const linkArr = ref([]);
 const getDate = async () => {
   const res = await getStatistics(null);
   let data = res.data;
-  console.log(data);
   if(userStore.userInfo.roleLabel == 'admin'){
     todayOrder.value =data.todayOrder;
     yesterdayOrder.value =data.yesterdayOrder;
@@ -158,7 +157,6 @@ const getDate = async () => {
   }
 };
 const setOpen = async (e) => {
-  console.log("开启关闭");
   await setOpenStatus({action:"open", open: e });
 };
 

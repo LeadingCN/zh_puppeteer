@@ -70,7 +70,8 @@ export class ApiService {
       //生成订单
       //body.parentChannel.toString() 前置补0
       let parentChannel = body.parentChannel.toString().padStart(2, "0");
-      let oid = this.util.generateUUID() + parentChannel + amount;
+      let buAmount = amount.toString().padStart(3, "0");
+      let oid = this.util.generateUUID() + parentChannel + buAmount;
 
       let order = new TopOrder();
       //获取系统设置的超时时间

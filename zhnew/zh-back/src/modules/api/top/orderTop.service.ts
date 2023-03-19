@@ -36,6 +36,8 @@ export class OrderTopService {
     //请求
     try {
       let r = await REQ.post({url: url, form: form})
+      Logger.log("回调结果")
+      Logger.log(r)
       if (r && r === 'success') {
         return {
           result : true,
@@ -325,6 +327,8 @@ export class OrderTopService {
 
   //请求通知回调
   async setOrderNotifyStatus(oid: string, res: NotifyResult) {
+    console.log("回调结果");
+    console.log(res);
     try {
       await this.orderRepository.createQueryBuilder()
         .update()

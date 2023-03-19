@@ -282,6 +282,9 @@ export class ZhService {
         } else if (action == "reuse") {
           z.reuse = reuse;
           await this.zhRepository.save(z);
+        } else if(action == 'resetRechargeLimit'){
+          z.lockLimit = 0;
+          await this.zhRepository.save(z);
         }
       }
     } catch (e) {
